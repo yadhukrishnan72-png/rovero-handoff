@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<!--
+  Rovero destination page: ONE template for every country and region page.
+  Open it with ?d=<code>, for example destination.html?d=jp  (data is read from ../data/pages/<code>.js).
+  In production, render the same markup from your own data and drop the small loader script at the bottom.
+  Tokens {name} / {the} are replaced by destination.js. Elements with data-for="country" or data-for="region" show only for that kind.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>eSIM for {name} — rovero</title>
+  <meta name="description" content="Instant activation, reliable coverage and no roaming fees. Pick a {name} eSIM data plan and get connected.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="destination.css">
+  <style>html:not(.ready) body { visibility: hidden; }</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top__inner">
+    <a class="logo" href="/">rovero</a>
+    <nav class="top__nav" aria-label="Main">
+      <a href="/destinations" aria-current="page">Destinations</a>
+      <a href="/what-is-an-esim">What is an eSIM</a>
+      <a href="/blog">Blog</a>
+      <a href="/faq">FAQ</a>
+    </nav>
+    <a class="top__account" href="/account">Account</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a><span aria-hidden="true">/</span>
+      <a href="/destinations">All destinations</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{name}</span>
+    </nav>
+
+    <div class="stage">
+      <div class="side">
+        <figure class="photo">
+          <img id="hero-img" src="" width="1000" height="1250" fetchpriority="high" alt="">
+        </figure>
+
+        <div class="info">
+          <details open>
+            <summary>Key features</summary>
+            <ul class="info__list">
+              <li>Affordable travel data plans with flexible validity for every type of trip.</li>
+              <li>Reliable connectivity through trusted local carrier partners across {the}.</li>
+              <li>Compatible with most eSIM-enabled smartphones, including iPhone, Samsung, and Google Pixel devices.</li>
+              <li data-for="region">Countries covered differ by plan. Tap the countries link on a plan to see where it works.</li>
+            </ul>
+          </details>
+          <details>
+            <summary>Plan details</summary>
+            <dl class="info__defs">
+              <div><dt>Activation</dt>
+                <dd data-for="country">Automatically activates when the eSIM connects to the supported network in {the}.</dd>
+                <dd data-for="region">Automatically activates when the eSIM connects to the supported network in a covered country.</dd></div>
+              <div><dt>Validity</dt><dd>Plan duration varies by package, typically 3 to 30 days.</dd></div>
+              <div><dt>Data options</dt><dd>Plans from 1 GB up to 20 GB, Data + Voice bundles, and Unlimited plans with 2 GB of high-speed data a day.<span data-for="region"> Bigger plans cover more countries.</span></dd></div>
+              <div><dt>Instant delivery</dt><dd>eSIM QR code and installation details are sent immediately after purchase.</dd></div>
+              <div><dt>Calls &amp; SMS</dt><dd>Data + Voice plans include call minutes and SMS. Data and Unlimited plans are data-only, so use WhatsApp or Telegram to call and text.</dd></div>
+              <div><dt>Network speed</dt><dd>Supports 4G/LTE and 5G depending on local carrier coverage.</dd></div>
+              <div><dt>Hotspot</dt><dd>Personal hotspot supported for sharing data with other devices.</dd></div>
+              <div><dt>Coverage</dt>
+                <dd data-for="country">Reliable connectivity across major cities and destinations in {the}.</dd>
+                <dd data-for="region">Countries included vary by plan. Check the list on each plan before you buy.</dd></div>
+            </dl>
+          </details>
+          <details>
+            <summary>Overview</summary>
+            <p>rovero makes it easy to compare and buy travel data before your trip. Choose the package that fits your usage<span data-for="region"> and the countries you are visiting</span>, install the eSIM in minutes, and stay connected across {the} without physical SIM cards or expensive roaming charges.</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="buy">
+        <section class="intro" aria-labelledby="title">
+          <h1 id="title">eSIM for {name}</h1>
+          <!-- Networks row (countries): filled from "networks" in the page data; hidden when empty -->
+          <div class="nets" id="nets" hidden>
+            <span class="nets__label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="14" width="3.5" height="7" rx="1"/><rect x="8.5" y="10" width="3.5" height="11" rx="1"/><rect x="14" y="6" width="3.5" height="15" rx="1"/><rect x="19.5" y="2" width="3" height="19" rx="1"/></svg>
+              Networks
+            </span>
+            <ul class="nets__list" id="nets-list"></ul>
+          </div>
+        </section>
+
+        <section class="plans" aria-labelledby="plans-title">
+          <div class="plans__head">
+            <h2 id="plans-title">Choose your plan</h2>
+            <div class="tabs" role="tablist" id="tabs" aria-label="Plan type"></div>
+          </div>
+          <div class="plan-list" id="plan-list" role="radiogroup" aria-labelledby="plans-title"></div>
+          <!-- Notices: the unlimited / local notes are shown only on tabs that need them (see destination.js) -->
+          <div class="callout" id="unl-note" hidden><svg class="callout__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg><p id="unl-text"></p></div>
+          <div class="callout" id="local-note" hidden><span class="callout__icon callout__icon--bolt" aria-hidden="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#FFF4D9"/><path d="M19 10 18 16h7v2l-8 8.5h-1V20H9v-1z" fill="#F0B100" stroke="#F0B100" stroke-width=".8" stroke-linejoin="round"/></svg></span><p><strong>Local plan.</strong> Connects to local networks for faster speeds.</p></div>
+          <div class="callout"><svg class="callout__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg><p><span data-for="country">Install before you fly. Your plan starts when it first connects in {the}.</span><span data-for="region">Install before you fly. Your plan starts when it first connects in a covered country.</span></p></div>
+        </section>
+
+        <section class="order" aria-label="Order summary">
+          <div class="order__sum" aria-live="polite">
+            <span id="o-plan">—</span>
+            <strong id="o-price">—</strong>
+          </div>
+          <!-- TODO (developer): wire "Pay now" to checkout with the selected plan (see selection in destination.js) -->
+          <button class="pay" type="button" id="pay">Pay now</button>
+          <p class="order__trust">Works on eSIM-ready iPhone, Samsung and Pixel phones.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 id="how-title">How do I get an eSIM for {name}?</h2>
+      <p class="band__sub">Four simple steps to stay connected.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step__n">1</span>
+          <h3>Choose a plan for your trip</h3>
+          <p>Pick the data and days that suit your stay<span data-for="region">, and check which countries are covered</span>.</p>
+          <div class="ill ill--plans" aria-hidden="true">
+            <div class="mini mini--on"><b>5 GB</b><span>30 days</span><em>$11.99</em></div>
+            <div class="mini"><b>3 GB</b><span>15 days</span><em>$7.99</em></div>
+          </div>
+        </li>
+
+        <li class="step">
+          <span class="step__n">2</span>
+          <h3>Pay once, securely</h3>
+          <p>Check out in a minute. Your eSIM lands in your inbox straight away.</p>
+          <div class="ill ill--pay" aria-hidden="true">
+            <span class="ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+            <strong>Order confirmed</strong>
+            <small>eSIM sent to your email</small>
+          </div>
+        </li>
+
+        <li class="step">
+          <span class="step__n">3</span>
+          <h3>Install it in one scan</h3>
+          <p>Scan the QR code on Wi-Fi. Doing it before you fly is easiest.</p>
+          <div class="ill ill--qr" aria-hidden="true">
+            <svg viewBox="0 0 63 63" shape-rendering="crispEdges" fill="currentColor">
+              <path fill-rule="evenodd" d="M0 0h21v21H0zM3 3v15h15V3zM42 0h21v21H42zM45 3v15h15V3zM0 42h21v21H0zM3 45v15h15V45z"/>
+              <path d="M6 6h9v9H6zM48 6h9v9h-9zM6 48h9v9H6z"/>
+              <path d="M27 0h6v6h-6zM36 6h6v6h-6zM27 12h6v6h-6zM24 24h6v6h-6zM36 24h6v6h-6zM48 27h6v6h-6zM57 24h6v6h-6zM27 33h6v6h-6zM42 36h6v6h-6zM54 42h9v6h-9zM24 45h6v6h-6zM33 48h6v6h-6zM45 51h6v6h-6zM57 54h6v9h-6zM27 57h6v6h-6zM0 27h6v6H0zM12 30h6v6h-6zM36 57h6v6h-6z"/>
+            </svg>
+          </div>
+        </li>
+
+        <li class="step">
+          <span class="step__n">4</span>
+          <h3>Land and go online</h3>
+          <p>Switch it on when you arrive and track your usage any time.</p>
+          <div class="ill ill--data" aria-hidden="true">
+            <div class="ill__row"><span>{name}</span><span class="sig"><i></i><i></i><i></i><i></i></span></div>
+            <strong>3.2 GB left</strong>
+            <div class="bar"><i></i></div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap who" aria-labelledby="who-title">
+    <h2 id="who-title">Which traveller are you?</h2>
+    <p class="who__sub">Not sure how much data to pick? Find yourself below.</p>
+    <ul class="who__grid">
+      <li class="who__card">
+        <span class="who__icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+        <h3>Light</h3>
+        <p class="who__for">Weekend trips and short stops</p>
+        <p class="who__does">Maps, messages and the odd photo.</p>
+        <span class="who__size">Go with a small plan</span>
+      </li>
+      <li class="who__card">
+        <span class="who__icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+        <h3>Everyday</h3>
+        <p class="who__for">One to two week holidays</p>
+        <p class="who__does">Social media, ride-hailing, photos and some video.</p>
+        <span class="who__size">Go with a mid-size plan</span>
+      </li>
+      <li class="who__card">
+        <span class="who__icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 19h19"/></svg></span>
+        <h3>Always on</h3>
+        <p class="who__for">Long stays and remote work</p>
+        <p class="who__does">Video calls, streaming and sharing a hotspot.</p>
+        <span class="who__size">Go with a large or unlimited plan</span>
+      </li>
+    </ul>
+    <p class="note">Still unsure? Pick the size up. Spare data beats running out mid-trip.</p>
+  </section>
+
+  <section class="wrap why" aria-labelledby="why-title">
+    <h2 id="why-title">Why travellers pick rovero</h2>
+    <p class="why__sub">Everything you need to stay online, nothing you don't.</p>
+
+    <div class="why__grid">
+      <ul class="perks">
+        <li><span class="perks__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><div><h3>Instant activation</h3><p>No store visit, no SIM swap, no waiting at the airport. Install in minutes.</p></div></li>
+        <li><span class="perks__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r=".8" fill="currentColor"/><path d="M1.5 9a14.5 14.5 0 0 1 21 0"/></svg></span><div><h3>Local networks</h3><p>Trusted carrier partners across {the} keep you connected.</p></div></li>
+        <li><span class="perks__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/></svg></span><div><h3>Fair prices</h3><p>Pay for the data you need, with no roaming surprises.</p></div></li>
+        <li><span class="perks__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/></svg></span><div><h3>Help when you need it</h3><p>Our support team is a message away, before and during your trip.</p></div></li>
+      </ul>
+
+      <!-- Related destinations card: filled from "related" in the page data -->
+      <div class="trips" id="related" hidden>
+        <h3 id="related-title">Explore more eSIM plans</h3>
+        <p id="related-text"></p>
+        <ul class="trips__chips" id="related-list" aria-label="Related destinations"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap faq" aria-labelledby="faq-title">
+    <h2 id="faq-title">Questions, answered</h2>
+    <div class="faq__list">
+      <details data-for="country"><summary>Does the eSIM work across all of {the}?</summary><p>Yes, wherever there is local coverage and your phone supports eSIM.</p></details>
+      <details data-for="region"><summary>Does the eSIM work across the whole of {name}?</summary><p>It works in the countries listed for your plan, subject to local coverage and a supported device. Tap "countries" on a plan to see where it works.</p></details>
+      <details data-for="region"><summary>Why do plans cover different countries?</summary><p>Each package connects to a set of partner networks. Smaller plans cover fewer countries, and larger plans cover more. Check the list before you buy.</p></details>
+      <details><summary>When does my plan start?</summary><p>When the eSIM first connects to a supported network, or when the package's activation policy begins.</p></details>
+      <details><summary>Can I install it before I travel?</summary><p>Yes, and we recommend it. Install at home on Wi-Fi, then switch it on when you land.</p></details>
+      <details><summary>Will my regular SIM still work?</summary><p>On most phones, yes. Keep it active for calls and SMS while the eSIM handles data.</p></details>
+      <details><summary>Can I use hotspot?</summary><p>It depends on the package and your device settings, but many plans support tethering.</p></details>
+      <details><summary>Do I need Wi-Fi to install?</summary><p>Yes. You need an internet connection to download the eSIM profile.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <span>© 2026 rovero</span>
+    <nav aria-label="Footer"><a href="/destinations">All destinations</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a></nav>
+  </div>
+</footer>
+
+<!-- Countries sheet (regions): bottom sheet on phones, centred dialog on larger screens -->
+<dialog class="dlg" id="cty-dlg" aria-labelledby="dlg-title">
+  <div class="dlg__head">
+    <div>
+      <h2 id="dlg-title">Countries included</h2>
+      <p class="dlg__sub" id="dlg-sub"></p>
+    </div>
+    <button class="dlg__close" type="button" id="dlg-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <label class="search dlg__search"><span class="sr">Search countries</span><input type="search" id="dlg-search" placeholder="Search countries" autocomplete="off"></label>
+  <ul class="dlg__list" id="dlg-list"></ul>
+  <p class="note dlg__empty" id="dlg-empty" hidden>No countries match your search.</p>
+  <div class="dlg__foot"><button class="pay" type="button" id="dlg-pick">Choose this plan</button></div>
+</dialog>
+
+<!-- Demo loader: reads ?d=<code>, loads ../data/pages/<code>.js (sets window.ROVERO_PAGE), then destination.js. Replace with real data in production. -->
+<script>
+(function () {
+  var code = (new URLSearchParams(location.search).get('d') || 'id').toLowerCase().replace(/[^a-z0-9-]/g, '');
+  var s = document.createElement('script');
+  s.src = '../data/pages/' + code + '.js';
+  s.onload = function () {
+    var m = document.createElement('script');
+    m.src = 'destination.js';
+    document.body.appendChild(m);
+  };
+  s.onerror = function () {
+    document.documentElement.classList.add('ready');
+    document.body.innerHTML = '<p style="font:16px system-ui;padding:2rem">No page data for "' + code + '". Add data/pages/' + code + '.js (see README).</p>';
+  };
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>
