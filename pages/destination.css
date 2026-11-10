@@ -318,3 +318,9 @@ body:has(.dlg[open]) { overflow: hidden; }
 
 /* The hidden attribute must always win over component display rules */
 [hidden] { display: none !important; }
+
+/* "More plans": reveals plans flagged more:true */
+.more-plans { display: flex; align-items: center; justify-content: center; gap: .375rem; margin: .875rem auto 0; padding: .5rem 1rem; border: 1.5px solid var(--rv-line); border-radius: 999px; background: #fff; font: inherit; font-size: .875rem; font-weight: 700; color: var(--rv-brand); cursor: pointer; transition: background .2s, border-color .2s; }
+.more-plans:hover { background: var(--rv-tint); border-color: #CDBDF2; }
+.more-plans::after { content: ""; width: .4rem; height: .4rem; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); transition: transform .2s; }
+.more-plans[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }

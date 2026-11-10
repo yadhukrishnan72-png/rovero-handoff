@@ -40,6 +40,13 @@ window.ROVERO_PAGE = {
         "days": 30,
         "price": 59.99,
         "coverage": "af-21"
+      },
+      {
+        "gb": "100 MB",
+        "days": 7,
+        "price": 2.99,
+        "coverage": "af-8",
+        "more": true
       }
     ],
     "voice": [

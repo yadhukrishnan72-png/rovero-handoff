@@ -99,6 +99,8 @@
             <div class="tabs" role="tablist" id="tabs" aria-label="Plan type"></div>
           </div>
           <div class="plan-list" id="plan-list" role="radiogroup" aria-labelledby="plans-title"></div>
+          <!-- Plans flagged more:true are hidden until this is pressed (e.g. the 100 MB plan) -->
+          <button type="button" class="more-plans" id="more-btn" aria-expanded="false" aria-controls="plan-list" hidden>More plans</button>
           <!-- Notices: the unlimited / local notes are shown only on tabs that need them (see destination.js) -->
           <div class="callout" id="unl-note" hidden><svg class="callout__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg><p id="unl-text"></p></div>
           <div class="callout" id="local-note" hidden><span class="callout__icon callout__icon--bolt" aria-hidden="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#FFF4D9"/><path d="M19 10 18 16h7v2l-8 8.5h-1V20H9v-1z" fill="#F0B100" stroke="#F0B100" stroke-width=".8" stroke-linejoin="round"/></svg></span><p><strong>Local plan.</strong> Connects to local networks for faster speeds.</p></div>

@@ -34,6 +34,17 @@ window.ROVERO_PAGE = {
         "gb": "20 GB",
         "days": 30,
         "price": 32.99
+      },
+      {
+        "gb": "50 GB",
+        "days": 30,
+        "price": 64.99
+      },
+      {
+        "gb": "100 MB",
+        "days": 7,
+        "price": 1.99,
+        "more": true
       }
     ],
     "voice": [

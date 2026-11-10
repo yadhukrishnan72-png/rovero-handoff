@@ -76,6 +76,7 @@ A **plan**:
 | `perDay` | Unlimited plans: shown on the tile ('2 GB/day') |
 | `tag` | pill on the tile ('Most popular'). The first tagged plan is preselected on each tab |
 | `local` | `true` shows the gold lightning badge and the "Local plan" notice on that tab |
+| `more` | `true` hides the plan until the **"More plans"** link under the tiles is pressed (used for the 100 MB plan). It is never the preselected plan |
 
 Rules that follow from the data (nothing is hardcoded to sizes, counts or countries):
 - The tab bar shows only the plan kinds that exist (Data / Data + Voice / Unlimited). One kind means no tab bar.
@@ -87,6 +88,19 @@ Rules that follow from the data (nothing is hardcoded to sizes, counts or countr
 `destination.js` fires events on `document`:
 - `rovero:select`: `{ kind, plan }` whenever the selected plan changes;
 - `rovero:pay`: `{ kind, plan, page }` when "Pay now" is pressed. **Nothing is wired to checkout yet.**
+
+## Which plans to show (supplier: eSIM Access)
+
+Only import these plans from the eSIM Access API and skip everything else:
+
+- **Data:** 1 GB (7 days), 3 GB (15 days), 5 GB, 10 GB, 20 GB and 50 GB (all 30 days).
+  The **100 MB (7 days)** plan is not shown in the main list: flag it `more: true` so it sits under "More plans".
+- **Unlimited:** only the "Unlimited, 2 GB per day" plan (speed reduces after the daily limit).
+- **Duplicates:** if two plans have the same GB, validity and price, one is probably roaming and the other uses a local network.
+  Keep the **local** plan and mark it `local: true` (gold lightning badge).
+- **Networks row** (country pages): get the supported network(s) and their speed (4G / 5G) from the API.
+
+(1 GB validity was assumed to be 7 days; confirm.)
 
 ## Adding a destination
 

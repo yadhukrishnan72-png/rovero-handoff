@@ -1,7 +1,8 @@
 // Rovero destination page (countries and regions). Reads window.ROVERO_PAGE (see ../data/pages/*.js and the README).
 //
 // Plan fields: gb, days, price; coverage (key into ROVERO_PAGE.coverage: the countries this plan works in; regions only);
-// optional: voice + sms (Data + Voice), perDay (Unlimited allowance), tag (e.g. 'Most popular'), local: true (lightning badge).
+// optional: voice + sms (Data + Voice), perDay (Unlimited allowance), tag (e.g. 'Most popular'), local: true (lightning badge),
+// more: true (hidden until the "More plans" link under the tiles is pressed; never the preselected plan).
 // The page logic never checks sizes or names: tabs, tiles, notices and the country sheet are all driven by this data.
 //
 // Developer hooks (CustomEvents on document):
@@ -96,6 +97,8 @@
   let kind = kinds[0];
   let selected = 0;
   let sheetPlan = 0;
+  let moreOpen = false;
+  const moreBtn = $('more-btn');
 
   function fill(ul, emptyEl, all, query) {
     const q = query.trim().toLowerCase();
@@ -125,8 +128,12 @@
   }
 
   function render() {
-    const recommended = PLANS[kind].findIndex((p) => p.tag);
-    selected = recommended >= 0 ? recommended : 0;
+    moreOpen = false;
+    const recommended = PLANS[kind].findIndex((p) => p.tag && !p.more);
+    selected = recommended >= 0 ? recommended : Math.max(0, PLANS[kind].findIndex((p) => !p.more));
+    moreBtn.hidden = !PLANS[kind].some((p) => p.more);
+    moreBtn.setAttribute('aria-expanded', 'false');
+    moreBtn.textContent = 'More plans';
     localNote.hidden = !PLANS[kind].some((p) => p.local);
     unlNote.hidden = !(kind === 'unlimited' && P.unlimitedNote);
 
@@ -186,10 +193,23 @@
         el.append(t);
       }
       el.querySelector('.plan__pick').addEventListener('click', () => select(i));
+      el.hidden = !!p.more;
       return el;
     }));
     select(selected);
   }
+
+  // "More plans" shows or hides the plans flagged more:true. Collapsing while one is selected falls back to the default plan.
+  moreBtn.addEventListener('click', () => {
+    moreOpen = !moreOpen;
+    PLANS[kind].forEach((p, i) => { if (p.more) list.children[i].hidden = !moreOpen; });
+    moreBtn.setAttribute('aria-expanded', String(moreOpen));
+    moreBtn.textContent = moreOpen ? 'Fewer plans' : 'More plans';
+    if (!moreOpen && PLANS[kind][selected].more) {
+      const back = PLANS[kind].findIndex((p) => p.tag && !p.more);
+      select(back >= 0 ? back : Math.max(0, PLANS[kind].findIndex((p) => !p.more)));
+    }
+  });
 
   list.addEventListener('keydown', (e) => {
     if (!e.target.classList.contains('plan__pick')) return;
@@ -197,7 +217,9 @@
     const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
     if (!step) return;
     e.preventDefault();
-    select((selected + step + n) % n);
+    let next = selected;
+    do { next = (next + step + n) % n; } while (list.children[next].hidden && next !== selected);
+    select(next);
     list.children[selected].querySelector('.plan__pick').focus();
   });
 
