@@ -1,0 +1,48 @@
+"""Motifs per destination code (keys from scene_kit.M). The first key is the main landmark; the rest sit beside it.
+Codes not listed here use their scene type's default look. The 16 hand-made sample scenes override these."""
+
+KEYS = {
+    # countries
+    'AD': ['church_hill'], 'AE': ['burj'], 'AF': [], 'AG': ['sailboat', 'sailboat'], 'AI': ['sailboat'], 'AL': [], 'AM': ['church_hill'],
+    'AO': ['baobab'], 'AR': ['peaks'], 'AT': ['church_onion'], 'AW': ['divi'], 'AX': ['cabin'], 'AZ': ['flame'], 'BA': ['mostar'],
+    'BB': ['lighthouse'], 'BD': ['pirogue'], 'BE': ['atomium'], 'BF': ['baobab', 'rondavel'], 'BG': ['stsava'], 'BH': ['doha'],
+    'BJ': ['stilt'], 'BL': ['yacht'], 'BM': ['lighthouse', 'colorhouses'], 'BN': ['goldmosque'], 'BO': ['llama'], 'BQ': ['flamingo', 'flamingo'],
+    'BR': ['christ'], 'BS': ['sailboat'], 'BT': ['cliff_monastery'], 'BW': ['elephant'], 'BY': ['bison'], 'BZ': ['sailboat'],
+    'CA': ['canoe'], 'CD': ['okapi'], 'CF': ['elephant'], 'CG': [], 'CI': ['pirogue'], 'CL': ['peaks'], 'CM': ['cone'],
+    'CN': ['greatwall'], 'CO': [], 'CR': ['cone', 'toucan'], 'CV': ['cone'], 'CW': ['colorhouses'], 'CY': [], 'CZ': ['prague'],
+    'DE': ['brandenburg'], 'DK': ['colorhouses'], 'DM': ['falls'], 'DO': ['sailboat'], 'DZ': ['ennedi'], 'EC': ['cone'], 'EE': ['medieval'],
+    'EG': ['pyramids'], 'ES': ['sagrada'], 'ET': ['gelada'], 'FI': ['sauna'], 'FJ': ['canoe'], 'FO': ['turf'],
+    'GA': ['elephant'], 'GB': ['bigben'], 'GD': ['sailboat'], 'GE': ['church_hill'], 'GF': ['rocket'], 'GG': ['lighthouse'], 'GH': ['pirogue'],
+    'GI': ['gibraltar'], 'GL': ['icebergs', 'colorhouses'], 'GM': ['pirogue'], 'GN': ['falls'], 'GP': ['cone'], 'GT': ['cone', 'tikal'],
+    'GU': [], 'GW': ['pirogue'], 'GY': ['falls'], 'HK': ['hk', 'junk'], 'HN': ['mayanstela'], 'HR': ['dubrovnik'], 'HT': ['citadel'],
+    'HU': ['parliament'], 'IE': ['lighthouse'], 'IL': ['nodome'], 'IM': ['laxey'], 'IQ': ['ziggurat'], 'IT': ['colosseum'],
+    'JE': ['lighthouse'], 'JM': ['sailboat'], 'JO': ['petra'], 'KG': ['ger'], 'KH': ['angkor'], 'KN': ['citadel'], 'KR': ['seoul'],
+    'KW': ['kuwait', 'dhow'], 'KY': [], 'KZ': ['baiterek'], 'LA': ['temple_roof'], 'LC': ['pitons'], 'LI': ['castle'], 'LK': ['sigiriya'],
+    'LR': [], 'LS': ['rondavel'], 'LT': ['trakai'], 'LU': ['bridge_arch'], 'LV': ['medieval'], 'LY': ['leptis'], 'MA': ['kasbah'],
+    'MC': ['yacht'], 'MD': [], 'ME': [], 'MF': [], 'MG': ['baobab'], 'MK': ['church_hill'], 'ML': ['mudmosque'], 'MO': ['macao'],
+    'MQ': ['cone'], 'MR': ['caravan'], 'MS': ['cone'], 'MT': ['valletta'], 'MU': ['morne'], 'MW': ['baobab'], 'MX': ['chichen'],
+    'MY': ['petronas'], 'MZ': ['dhow'], 'NC': ['fale'], 'NE': ['minaret'], 'NG': ['zuma'], 'NI': ['cone'], 'NP': ['stupa'], 'NR': ['pinnacles'],
+    'NZ': [], 'OM': ['castle', 'dhow'], 'PA': ['skyline', 'yacht'], 'PE': ['machu', 'llama'], 'PF': ['otemanu', 'bungalow'],
+    'PG': ['birdofparadise'], 'PH': ['karst', 'banca'], 'PK': ['peaks'], 'PL': ['colorhouses'], 'PR': ['citadel'], 'PT': ['belem'],
+    'PY': ['church_hill'], 'QA': ['doha', 'dhow'], 'RE': ['cone'], 'RO': ['castle'], 'RS': ['stsava'], 'RU': ['onion'],
+    'RW': ['cone', 'gorilla'], 'SA': ['kingdom'], 'SC': ['boulders'], 'SD': ['meroe'], 'SE': ['cabin'], 'SG': ['marina'], 'SI': ['church_hill'],
+    'SK': ['castle'], 'SL': [], 'SM': ['castle'], 'SN': ['baobab'], 'SR': ['colorhouses'], 'SS': ['shoebill'], 'SV': ['cone'], 'SZ': ['rondavel'],
+    'TC': ['sailboat'], 'TD': ['ennedi'], 'TG': ['pirogue'], 'TH': ['prang', 'longtail'], 'TJ': ['peaks'], 'TN': [], 'TO': ['whale'],
+    'TR': ['cappadocia'], 'TT': ['ibis'], 'TW': ['taipei'], 'TZ': ['kili'], 'UA': ['windmill'], 'UG': ['falls'], 'UY': [], 'UZ': ['registan'],
+    'VA': ['stpeters'], 'VC': ['sailboat', 'sailboat'], 'VE': ['falls'], 'VG': ['boulders'], 'VN': ['halong', 'junk'], 'VU': ['cone'],
+    'WS': ['fale'], 'XK': [], 'YE': ['shibam'], 'YT': [], 'ZA': ['table'], 'ZM': ['vicfalls'], 'ZW': ['boulders'],
+    # regions
+    'EU': ['eiffel', 'colosseum', 'bigben'], 'EU-42': ['eiffel', 'brandenburg', 'windmill'], 'EU-43': ['eiffel', 'colosseum', 'kasbah'],
+    'EU-30': ['bigben', 'cappadocia', 'colosseum'], 'EU-31': ['sagrada', 'prague', 'windmill'], 'EU-33': ['eiffel', 'valletta', 'bigben'],
+    'EU-35': ['colosseum', 'brandenburg', 'medieval'], 'EU-7': ['dubrovnik', 'mostar'], 'AF-29': ['baobab', 'kili'],
+    'AS-12': ['hk', 'marina', 'pagoda'], 'AS-14': ['taj', 'prang', 'fuji'], 'AS-21': ['taj', 'fuji', 'angkor'], 'AS-20': ['opera', 'marina', 'fuji'],
+    'AS-7': ['angkor', 'longtail'], 'SEA-8': ['prang', 'angkor', 'halong'], 'SGMYVNTHID-5': ['marina', 'petronas'],
+    'SGMYTH-3': ['marina', 'petronas', 'prang'], 'SGMY-2': ['marina', 'petronas'], 'CA-4': ['registan', 'ger', 'baiterek'],
+    'AS-5': ['registan', 'sigiriya'], 'SAS-6': ['stupa', 'taj'], 'CN-3': ['hk', 'greatwall', 'macao'], 'CNHK-2': ['hk', 'greatwall'],
+    'CNJPKR-3': ['greatwall', 'fuji', 'seoul'], 'JPKR-2': ['fuji', 'seoul'], 'AUNZ-2': ['opera'], 'AUKUS-3': ['opera', 'bigben', 'liberty'],
+    'OCE-8': ['opera', 'bungalow', 'canoe'], 'CB-25': ['christ', 'machu', 'sailboat'], 'SA-18': ['christ', 'machu'],
+    'SA-6': ['peaks', 'christ', 'machu'], 'NA-3': ['liberty', 'chichen', 'skyline'], 'USCA-2': ['liberty', 'canoe'], 'BI-2': ['bigben', 'lighthouse'],
+    'IESI-2': ['lighthouse', 'church_hill'], 'SAAEQAKWOMBH-6': ['burj', 'kuwait', 'doha'], 'ME-6': ['burj', 'doha', 'caravan'],
+    'ME-5': ['doha', 'kuwait', 'caravan'], 'ME-12': ['pyramids', 'petra', 'burj'], 'ME-13': ['petra', 'burj', 'cappadocia'],
+    'GL-139': [],  # drawn by the hand-made Global scene with a different set of landmark icons
+}
