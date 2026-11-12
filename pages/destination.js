@@ -1,7 +1,7 @@
 // Rovero destination page (countries and regions). Reads window.ROVERO_PAGE (see ../data/pages/*.js and the README).
 //
 // Plan fields: gb, days, price; coverage (key into ROVERO_PAGE.coverage: the countries this plan works in; regions only);
-// optional: voice + sms (Data + Voice), perDay (Unlimited allowance), tag (e.g. 'Most popular'), local: true (lightning badge), global: true (blue globe badge + "Global plan" notice with a countries popup),
+// optional: voice + sms (Data + Voice), perDay (Unlimited allowance), tag (e.g. 'Most popular'), local: true (lightning badge), global: true (blue globe badge + "Global plan" notice with a countries popup), number: { country, code } (global voice plans: the phone number included; shown in the Global plan notice),
 // more: true (hidden until the "More plans" link under the tiles is pressed; never the preselected plan).
 // The page logic never checks sizes or names: tabs, tiles, notices and the country sheet are all driven by this data.
 //
@@ -81,6 +81,7 @@
   const localNote = $('local-note');
   const unlNote = $('unl-note');
   const globalNote = $('global-note');
+  const globalTail = $('global-tail');
   if (P.unlimitedNote) {
     const t = $('unl-text');
     const s = document.createElement('strong');
@@ -119,6 +120,13 @@
     out.plan.textContent = `${label(p)} · ${p.days} days`;
     out.price.textContent = usd(p.price);
     globalNote.hidden = !(p.global && GLOBAL.length);
+    if (p.number) {
+      const s = document.createElement('strong');
+      s.textContent = `Includes a ${p.number.country} phone number (${p.number.code}).`;
+      globalTail.replaceChildren(s);
+    } else {
+      globalTail.textContent = 'Speeds depend on the partner network.';
+    }
     document.dispatchEvent(new CustomEvent('rovero:select', { detail: { kind, plan: p } }));
   }
 

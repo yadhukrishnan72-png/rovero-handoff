@@ -58,7 +58,8 @@ window.ROVERO_PAGE = {
         "sms": "25 SMS",
         "days": 15,
         "price": 11.99,
-        "global": true
+        "global": true,
+        "number": { "country": "France", "code": "+33" }
       },
       {
         "gb": "5 GB",
@@ -83,7 +84,8 @@ window.ROVERO_PAGE = {
         "sms": "100 SMS",
         "days": 30,
         "price": 39.99,
-        "global": true
+        "global": true,
+        "number": { "country": "France", "code": "+33" }
       }
     ],
     "unlimited": [
