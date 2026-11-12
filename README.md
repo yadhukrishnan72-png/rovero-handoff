@@ -76,6 +76,7 @@ A **plan**:
 | `perDay` | Unlimited plans: shown on the tile ('2 GB/day') |
 | `tag` | pill on the tile ('Most popular'). The first tagged plan is preselected on each tab |
 | `local` | `true` shows the gold lightning badge and the "Local plan" notice on that tab |
+| `global` | `true` shows the blue globe badge on the tile. While that plan is selected, a "Global plan" notice appears with a "See all countries" link that opens a searchable popup of `globalCountries` (a top-level array in the page data; the count is taken from it). Without `globalCountries` the notice stays hidden |
 | `more` | `true` hides the plan until the **"More plans"** link under the tiles is pressed (used for the 100 MB plan). It is never the preselected plan |
 
 Rules that follow from the data (nothing is hardcoded to sizes, counts or countries):

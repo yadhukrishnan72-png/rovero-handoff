@@ -7,6 +7,8 @@ window.ROVERO_PAGE = {
   "image": "../assets/destinations/id.svg",
   "alt": "Illustration: Balinese split gate and palms at sunset",
   "_note": "EXAMPLE DATA. Plan sizes, prices, voice/SMS bundles, local flags and networks are placeholders.",
+  "_globalNote": "PLACEHOLDER country list for plans flagged global:true. Replace with the real coverage.",
+  "globalCountries": ["Australia", "Austria", "Belgium", "Brazil", "Cambodia", "Canada", "Chile", "Croatia", "Czechia", "Denmark", "Egypt", "Finland", "France", "Germany", "Greece", "Hungary", "India", "Ireland", "Italy", "Japan", "Kenya", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "Norway", "Philippines", "Poland", "Portugal", "Singapore", "South Africa", "South Korea", "Spain", "Sweden", "Switzerland", "Thailand", "Turkey", "United Arab Emirates", "United Kingdom", "United States", "Vietnam"],
   "plans": {
     "data": [
       {
@@ -28,12 +30,14 @@ window.ROVERO_PAGE = {
       {
         "gb": "10 GB",
         "days": 30,
-        "price": 19.99
+        "price": 19.99,
+        "global": true
       },
       {
         "gb": "20 GB",
         "days": 30,
-        "price": 32.99
+        "price": 32.99,
+        "global": true
       },
       {
         "gb": "50 GB",
@@ -53,7 +57,8 @@ window.ROVERO_PAGE = {
         "voice": "100 min",
         "sms": "25 SMS",
         "days": 15,
-        "price": 11.99
+        "price": 11.99,
+        "global": true
       },
       {
         "gb": "5 GB",
@@ -77,7 +82,8 @@ window.ROVERO_PAGE = {
         "voice": "Unlimited min",
         "sms": "100 SMS",
         "days": 30,
-        "price": 39.99
+        "price": 39.99,
+        "global": true
       }
     ],
     "unlimited": [

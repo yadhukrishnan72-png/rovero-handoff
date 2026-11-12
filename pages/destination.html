@@ -104,6 +104,7 @@
           <!-- Notices: the unlimited / local notes are shown only on tabs that need them (see destination.js) -->
           <div class="callout" id="unl-note" hidden><svg class="callout__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg><p id="unl-text"></p></div>
           <div class="callout" id="local-note" hidden><span class="callout__icon callout__icon--bolt" aria-hidden="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#FFF4D9"/><path d="M19 10 18 16h7v2l-8 8.5h-1V20H9v-1z" fill="#F0B100" stroke="#F0B100" stroke-width=".8" stroke-linejoin="round"/></svg></span><p><strong>Local plan.</strong> Connects to local networks for faster speeds.</p></div>
+          <div class="callout callout--global" id="global-note" hidden><span class="callout__icon callout__icon--bolt" aria-hidden="true"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="18" fill="#E3F0FF"/><g fill="none" stroke="#1A73E8" stroke-width="1.7" stroke-linecap="round"><circle cx="18" cy="18" r="8"/><ellipse cx="18" cy="18" rx="3.6" ry="8"/><path d="M10 18h16"/></g></svg></span><p><strong>Global plan.</strong> Works in <span id="global-lead"></span> on one eSIM. <button type="button" class="linkbtn" id="global-open">See all countries</button> Speeds depend on the partner network.</p></div>
           <div class="callout"><svg class="callout__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg><p><span data-for="country">Install before you fly. Your plan starts when it first connects in {the}.</span><span data-for="region">Install before you fly. Your plan starts when it first connects in a covered country.</span></p></div>
         </section>
 
@@ -261,6 +262,22 @@
   <ul class="dlg__list" id="dlg-list"></ul>
   <p class="note dlg__empty" id="dlg-empty" hidden>No countries match your search.</p>
   <div class="dlg__foot"><button class="pay" type="button" id="dlg-pick">Choose this plan</button></div>
+</dialog>
+
+<!-- Global-plan countries (plans flagged global:true; list = ROVERO_PAGE.globalCountries) -->
+<dialog class="dlg" id="glb-dlg" aria-labelledby="glb-title">
+  <div class="dlg__head">
+    <div>
+      <h2 id="glb-title">Global plan countries</h2>
+      <p class="dlg__sub" id="glb-sub"></p>
+    </div>
+    <button class="dlg__close" type="button" id="glb-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <label class="search dlg__search"><span class="sr">Search countries</span><input type="search" id="glb-search" placeholder="Search countries" autocomplete="off"></label>
+  <ul class="dlg__list" id="glb-list"></ul>
+  <p class="note dlg__empty" id="glb-empty" hidden>No countries match your search.</p>
 </dialog>
 
 <!-- Demo loader: reads ?d=<code>, loads ../data/pages/<code>.js (sets window.ROVERO_PAGE), then destination.js. Replace with real data in production. -->

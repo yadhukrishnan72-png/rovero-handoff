@@ -112,6 +112,8 @@ button { font-family: inherit; }
 .callout[hidden] { display: none; }
 .callout__icon { flex: none; margin-top: .0625rem; color: var(--rv-brand); }
 .callout__icon--bolt { width: 1.75rem; height: 1.75rem; margin-top: -.125rem; }
+.callout.callout--global { background: #EEF5FF; }
+.linkbtn { border: 0; background: none; padding: 0; font: inherit; font-weight: 700; color: #1A73E8; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 .callout + .callout { margin-top: .625rem; }
 .note { margin-top: 1rem; font-size: .875rem; color: var(--rv-muted); }
 

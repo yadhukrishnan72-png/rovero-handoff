@@ -1,7 +1,7 @@
 // Rovero destination page (countries and regions). Reads window.ROVERO_PAGE (see ../data/pages/*.js and the README).
 //
 // Plan fields: gb, days, price; coverage (key into ROVERO_PAGE.coverage: the countries this plan works in; regions only);
-// optional: voice + sms (Data + Voice), perDay (Unlimited allowance), tag (e.g. 'Most popular'), local: true (lightning badge),
+// optional: voice + sms (Data + Voice), perDay (Unlimited allowance), tag (e.g. 'Most popular'), local: true (lightning badge), global: true (blue globe badge + "Global plan" notice with a countries popup),
 // more: true (hidden until the "More plans" link under the tiles is pressed; never the preselected plan).
 // The page logic never checks sizes or names: tabs, tiles, notices and the country sheet are all driven by this data.
 //
@@ -16,6 +16,7 @@
   const PLANS = P.plans || {};
   const COVERAGE = P.coverage || {};
   const isRegion = P.kind === 'region';
+  const GLOBAL = [...(P.globalCountries || [])].sort((a, b) => a.localeCompare(b));
 
   // ---- 1. text tokens and kind-specific blocks --------------------------------------------------------------
   const tokens = { name: P.name, the: P.the || P.name };
@@ -79,6 +80,7 @@
   const tabsEl = $('tabs');
   const localNote = $('local-note');
   const unlNote = $('unl-note');
+  const globalNote = $('global-note');
   if (P.unlimitedNote) {
     const t = $('unl-text');
     const s = document.createElement('strong');
@@ -87,6 +89,7 @@
   }
   const out = { plan: $('o-plan'), price: $('o-price') };
   const BOLT = '<svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#FFF4D9"/><path d="M19 10 18 16h7v2l-8 8.5h-1V20H9v-1z" fill="#F0B100" stroke="#F0B100" stroke-width=".8" stroke-linejoin="round"/></svg>';
+  const GLOBE_BADGE = '<svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="18" fill="#E3F0FF"/><g fill="none" stroke="#1A73E8" stroke-width="1.7" stroke-linecap="round"><circle cx="18" cy="18" r="8"/><ellipse cx="18" cy="18" rx="3.6" ry="8"/><path d="M10 18h16"/></g></svg>';
   const TAB_LABELS = { data: 'Data', voice: 'Data + Voice', unlimited: 'Unlimited' };
 
   const names = (id) => [...(COVERAGE[id] || [])].sort((a, b) => a.localeCompare(b));
@@ -115,6 +118,7 @@
     const p = PLANS[kind][selected];
     out.plan.textContent = `${label(p)} · ${p.days} days`;
     out.price.textContent = usd(p.price);
+    globalNote.hidden = !(p.global && GLOBAL.length);
     document.dispatchEvent(new CustomEvent('rovero:select', { detail: { kind, plan: p } }));
   }
 
@@ -184,6 +188,14 @@
         b.setAttribute('role', 'img');
         b.setAttribute('aria-label', 'Local plan');
         b.innerHTML = BOLT;
+        el.append(b);
+      }
+      if (p.global) {
+        const b = document.createElement('span');
+        b.className = 'plan__local';
+        b.setAttribute('role', 'img');
+        b.setAttribute('aria-label', 'Global plan');
+        b.innerHTML = GLOBE_BADGE;
         el.append(b);
       }
       if (p.tag) {
@@ -267,6 +279,23 @@
   dlg.close.addEventListener('click', () => dlg.el.close());
   dlg.pick.addEventListener('click', () => { select(sheetPlan); dlg.el.close(); });
   dlg.el.addEventListener('click', (e) => { if (e.target === dlg.el) dlg.el.close(); });
+
+  // ---- 5. global-plan countries popup -----------------------------------------------------------------------
+  const glb = { el: $('glb-dlg'), sub: $('glb-sub'), list: $('glb-list'), search: $('glb-search'), empty: $('glb-empty') };
+  if (GLOBAL.length) {
+    $('global-lead').textContent = isRegion ? `${GLOBAL.length} countries` : `${P.the || P.name} and ${GLOBAL.length} other countries`;
+    glb.sub.textContent = plural(GLOBAL.length);
+    const showGlobal = () => fill(glb.list, glb.empty, GLOBAL, glb.search.value);
+    glb.search.addEventListener('input', showGlobal);
+    $('global-open').addEventListener('click', () => {
+      glb.search.value = '';
+      showGlobal();
+      glb.el.showModal();
+      glb.list.scrollTop = 0;
+    });
+    $('glb-close').addEventListener('click', () => glb.el.close());
+    glb.el.addEventListener('click', (e) => { if (e.target === glb.el) glb.el.close(); });
+  }
 
   $('pay').addEventListener('click', () => {
     document.dispatchEvent(new CustomEvent('rovero:pay', { detail: { kind, plan: PLANS[kind][selected], page: P.code } }));
